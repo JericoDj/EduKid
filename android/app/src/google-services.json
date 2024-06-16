@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "884339429918",
+    "project_id": "edukid-60f55",
+    "storage_bucket": "edukid-60f55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884339429918:android:6d738aceb1ac0e7ae7140f",
+        "android_client_info": {
+          "package_name": "com.example.edukid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884339429918-uls4bgu9is1gost6bl3om8hojq1qpus2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_hzOu8FdBRJHCuSaeJihg7mFR8WX7kRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884339429918-uls4bgu9is1gost6bl3om8hojq1qpus2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884339429918-q2cjqog3178p9t7rau272lkc7uom9kq3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.edukid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884339429918:android:3dedbe40c18b853be7140f",
+        "android_client_info": {
+          "package_name": "com.leos.EduKid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884339429918-7jhg2gnlt7hl9atn0mj52mo109k4o77u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.leos.EduKid",
+            "certificate_hash": "30450f94eddb9516975713a2a0e8207dee782ff6"
+          }
+        },
+        {
+          "client_id": "884339429918-uls4bgu9is1gost6bl3om8hojq1qpus2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_hzOu8FdBRJHCuSaeJihg7mFR8WX7kRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884339429918-uls4bgu9is1gost6bl3om8hojq1qpus2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884339429918-q2cjqog3178p9t7rau272lkc7uom9kq3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.edukid"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

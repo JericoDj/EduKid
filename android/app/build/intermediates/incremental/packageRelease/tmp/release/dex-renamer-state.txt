@@ -1,0 +1,4 @@
+#Sun Jan 14 23:19:43 PST 2024
+base.0=C\:\\Users\\dejes\\OneDrive\\Documents\\StudioProjects\\EduKid\\android\\app\\build\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
