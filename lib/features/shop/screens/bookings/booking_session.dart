@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../../utils/constants/sizes.dart';
 import '../../../screens/homescreen/widgets/promo_slider.dart';
-import '../../models/booking_model.dart';
 import '../booking_checkout/booking_checkout.dart';
 
 class BookingSessionScreen extends StatefulWidget {
@@ -21,11 +20,22 @@ class BookingSessionScreen extends StatefulWidget {
 }
 
 class _BookingSessionScreenState extends State<BookingSessionScreen> {
-
   final double price = 10; // Define the price to be 10
   List<int> _selectedIndexes = [];
   List<bool> _isSelected = [];
   bool _isSelecting = false;
+
+  List<String> timeSlots = [
+    "10:30 - 11:30",
+    "12:30 - 13:30",
+    "13:40 - 14:40",
+    "14:50 - 15:50",
+    "16:10 - 17:10",
+    "17:20 - 18:20",
+    "18:30 - 19:30"
+  ];
+
+  List<int> slotAvailability = List<int>.filled(7, 4); // 4 slots available for each time slot
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +132,9 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                                 children: [
                                   Expanded(
                                     child: GestureDetector(
-                                      onTap: _isSelecting ? null : () => _selectDate(context, index),
+                                      onTap: _isSelecting
+                                          ? null
+                                          : () => _selectDate(context, index),
                                       child: Text(
                                         'Date ${index + 1}: ${widget.selectedDates[index].day}/${widget.selectedDates[index].month}/${widget.selectedDates[index].year}',
                                         style: TextStyle(color: Colors.black),
@@ -132,15 +144,17 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                                   SizedBox(width: 10), // Adjust the spacing as needed
                                   Expanded(
                                     child: GestureDetector(
-                                      onTap: _isSelecting ? null : () => _selectTime(context, index),
+                                      onTap: _isSelecting
+                                          ? null
+                                          : () => _selectTime(context, index),
                                       child: Row(
                                         children: [
-                                          Icon(Icons.access_time), // Keep the icon of the time
-                                          SizedBox(width: 5), // Adjust the spacing as needed
+                                          Icon(Icons.access_time),
+                                          SizedBox(width: 5),
                                           Text(
                                             widget.selectedTimes[index] != null
-                                                ? widget.selectedTimes[index]!.format(context)
-                                                : 'Tap to Edit',
+                                                ? timeSlots[widget.selectedTimes[index]!.hour - 10] // Adjust based on your actual time slots
+                                                : 'Select Time',
                                           ),
                                         ],
                                       ),
@@ -149,7 +163,8 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                                   if (_isSelecting)
                                     Checkbox(
                                       value: _isSelected[index],
-                                      onChanged: (value) => _toggleSelected(index),
+                                      onChanged: (value) =>
+                                          _toggleSelected(index),
                                     ),
                                 ],
                               ),
@@ -164,7 +179,6 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                         ),
                       ),
                       SizedBox(height: MySizes.spaceBtwItems),
-                      // Adjust the height as needed
                     ],
                   );
                 },
@@ -182,7 +196,6 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                     for (int i = 0; i < widget.selectedDates.length; i++) {
                       pickedDates.add(widget.selectedDates[i]);
                       pickedTimes.add(widget.selectedTimes[i]);
-                      // Calculate the total price by adding the price of each widget
                       print(
                           'Index: $i, Picked Date: ${widget.selectedDates[i]}, Picked Time: ${widget.selectedTimes[i]}');
                     }
@@ -195,8 +208,8 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    backgroundColor: WidgetStateProperty.all(Colors.blue),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28.0),
                       ),
@@ -210,16 +223,17 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
                       ),
                       Text(
-                        '\$${widget.selectedDates.length * 10}', // Calculate total price based on the number of selected dates
-                        style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
+                        '\$${widget.selectedDates.length * 10}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-
-
             SizedBox(height: MySizes.spaceBtwItems),
           ],
         ),
@@ -228,14 +242,40 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
   }
 
   Future<void> _selectTime(BuildContext context, int index) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
+    String? selectedSlot = await showDialog<String>(
       context: context,
-      initialTime: widget.selectedTimes[index] ?? TimeOfDay.now(),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select a Time Slot'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: timeSlots.asMap().entries.map((entry) {
+                int idx = entry.key;
+                String slot = entry.value;
+                return ListTile(
+                  title: Text(slot),
+                  subtitle: Text('${slotAvailability[idx]} slots available'),
+                  enabled: slotAvailability[idx] > 0,
+                  onTap: () {
+                    Navigator.of(context).pop(slot);
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
-    if (pickedTime != null) {
+
+    if (selectedSlot != null) {
       setState(() {
-        widget.selectedTimes[index] = pickedTime;
-        print('Picked Time: $pickedTime');
+        int selectedIndex = timeSlots.indexOf(selectedSlot);
+        widget.selectedTimes[index] = TimeOfDay.fromDateTime(
+          DateTime.parse('2000-01-01 ${selectedSlot.split(" - ")[0]}:00'),
+        );
+        slotAvailability[selectedIndex]--;
+        print('Selected Slot: $selectedSlot');
+        print('Slots Available: ${slotAvailability[selectedIndex]}');
       });
     }
   }
@@ -320,7 +360,6 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
         });
         _selectedIndexes.clear();
       } else {
-        // If not selecting, clear the selection and add all indexes
         _selectedIndexes.clear();
         for (int i = 0; i < widget.selectedDates.length; i++) {
           _selectedIndexes.add(i);
