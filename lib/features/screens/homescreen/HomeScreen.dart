@@ -82,9 +82,9 @@ class HomeScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.to(BookingSessionScreen(selectedDates: [], selectedTimes: [],)),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(MyColors.white),
+                              backgroundColor: WidgetStateProperty.all(MyColors.white),
                               // Change background color
-                              side: MaterialStateProperty.all<BorderSide>(
+                              side: WidgetStateProperty.all<BorderSide>(
                                 BorderSide(color: MyColors.primaryColor),
                               ),
                             ),
@@ -103,9 +103,9 @@ class HomeScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.to(BookingSessionScreen(selectedDates: [], selectedTimes: [], )),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(MyColors.primaryColor),
+                              backgroundColor: WidgetStateProperty.all(MyColors.primaryColor),
                               // Change background color
-                              side: MaterialStateProperty.all<BorderSide>(
+                              side: WidgetStateProperty.all<BorderSide>(
                                 BorderSide(color: MyColors.primaryColor),
                               ),
                             ),

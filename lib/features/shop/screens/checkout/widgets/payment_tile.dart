@@ -8,21 +8,17 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../controller/product/checkout_controller.dart';
 import '../../../models/payment_method_model.dart';
-
 class MyPaymentTile extends StatelessWidget {
-  const MyPaymentTile({Key? key, required this.paymentMethod}) : super(key: key);
+  const MyPaymentTile({Key? key, required this.paymentMethod, required this.onTap}) : super(key: key);
 
   final PaymentMethodModel paymentMethod;
+  final VoidCallback onTap; // Add a callback for handling tap events
 
   @override
   Widget build(BuildContext context) {
-    final controller = CheckoutController.instance;
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
-      onTap: () {
-        controller.selectedPaymentMethod.value = paymentMethod; // Update selected payment method
-        Get.back(result: paymentMethod); // Close the bottom sheet and return the selected payment method
-      },
+      onTap: onTap, // Use the onTap callback
       leading: MyRoundedContainer(
         width: 60,
         height: 40,
