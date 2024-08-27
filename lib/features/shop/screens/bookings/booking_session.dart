@@ -32,7 +32,7 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
     "14:50 - 15:50",
     "16:10 - 17:10",
     "17:20 - 18:20",
-    "18:30 - 19:30"
+    "18:30 - 19:30",
   ];
 
   List<int> slotAvailability = List<int>.filled(7, 4); // 4 slots available for each time slot
@@ -153,7 +153,10 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
                                           SizedBox(width: 5),
                                           Text(
                                             widget.selectedTimes[index] != null
-                                                ? timeSlots[widget.selectedTimes[index]!.hour - 10] // Adjust based on your actual time slots
+                                                ? timeSlots[timeSlots.indexOf(timeSlots.firstWhere((slot) =>
+                                            TimeOfDay(hour: int.parse(slot.split(" - ")[0].split(":")[0]),
+                                                minute: int.parse(slot.split(" - ")[0].split(":")[1]))
+                                                == widget.selectedTimes[index]))]
                                                 : 'Select Time',
                                           ),
                                         ],
@@ -270,10 +273,10 @@ class _BookingSessionScreenState extends State<BookingSessionScreen> {
     if (selectedSlot != null) {
       setState(() {
         int selectedIndex = timeSlots.indexOf(selectedSlot);
-        widget.selectedTimes[index] = TimeOfDay.fromDateTime(
-          DateTime.parse('2000-01-01 ${selectedSlot.split(" - ")[0]}:00'),
+        widget.selectedTimes[index] = TimeOfDay(
+          hour: int.parse(selectedSlot.split(" - ")[0].split(":")[0]),
+          minute: int.parse(selectedSlot.split(" - ")[0].split(":")[1]),
         );
-        slotAvailability[selectedIndex]--;
         print('Selected Slot: $selectedSlot');
         print('Slots Available: ${slotAvailability[selectedIndex]}');
       });

@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           width: double.infinity, // Set width to fill available space
                           child: ElevatedButton(
-                            onPressed: () => Get.to(BookingSessionScreen(selectedDates: [], selectedTimes: [],)),
+                            onPressed: () => Get.to(() => BookingSessionScreen(selectedDates: [], selectedTimes: [],)),
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(MyColors.white),
                               // Change background color
@@ -101,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           width: double.infinity, // Set width to fill available space
                           child: ElevatedButton(
-                            onPressed: () => Get.to(BookingSessionScreen(selectedDates: [], selectedTimes: [], )),
+                            onPressed: () => Get.to(() => BookingSessionScreen(selectedDates: [], selectedTimes: [], )),
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(MyColors.primaryColor),
                               // Change background color

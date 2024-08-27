@@ -6,6 +6,9 @@ import 'package:edukid/features/shop/models/booking_orders_model.dart';
 
 
 
+import '../../../common/success_screen/sucess_screen.dart';
+import '../../../navigation_Bar.dart';
+import '../../../utils/constants/image_strings.dart';
 import '../authentication_repository.dart';
 
 class BookingOrderRepository extends GetxController {
@@ -54,6 +57,13 @@ class BookingOrderRepository extends GetxController {
       // Check if userId is not null before proceeding
       if (userId != null && userId.isNotEmpty) {
         await _db.collection('Users').doc(userId).collection('Bookings').add(booking.toJson());
+
+        Get.offAll(() => SuccessScreen(
+          image: MyImages.accountGIF,
+          title: 'Booking Successful!',
+          subtitle: 'Your booking has been confirmed!',
+          onPressed: () => Get.offAll(() => const NavigationBarMenu()),
+        ));
       } else {
         throw Exception('Unable to find user information. Try again in a few minutes.');
       }
