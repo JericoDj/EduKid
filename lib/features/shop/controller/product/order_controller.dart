@@ -83,7 +83,7 @@ class OrderController extends GetxController {
 
         if (paymentSuccess) {
           // Payment was successful, proceed to save the order and clear cart
-          await _saveOrderAndClearCart(userId, totalAmount);
+          _saveOrderAndClearCart(userId, totalAmount);
         } else {
           MyLoaders.errorSnackBar(
             title: 'Payment Failed',
